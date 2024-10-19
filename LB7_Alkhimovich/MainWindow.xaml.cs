@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Controls;
+
 
 namespace LB7_Alkhimovich
 {
@@ -18,41 +20,16 @@ namespace LB7_Alkhimovich
             lBox.DataContext = Cars;
         }
 
-        public class CarContext : DbContext
-        {
-            public CarContext() : base("CarConnection")
-            {
-                Database.SetInitializer<CarContext>(new CarDatabaseInitializer());
-            }
-
-            public DbSet<Car> Cars { get; set; }
-        }
-
-        public class CarDatabaseInitializer : DropCreateDatabaseIfModelChanges<CarContext>
-        {
-            protected override void Seed(CarContext context)
-            {
-                // Добавление начальных данных для таблицы Cars
-                if (!context.Cars.Any())  // Если таблица пуста, мы добавляем начальные данные с помощью метода AddRange
-                {
-                    context.Cars.AddRange(new Car[]
-                    {
-                    new Car { Marka = "Toyota", Model = "Corolla", Year = 2020, Color = "Red" },
-                    new Car { Marka = "Honda", Model = "Civic", Year = 2019, Color = "Blue" },
-                    new Car { Marka = "Ford", Model = "Focus", Year = 2021, Color = "Black" }
-                    });
-                    context.SaveChanges();
-                }
-            }
-        }
+       
 
         void FillData()
         {
             Cars.Clear();
-            foreach (var item in Car.GetAllCars())
-            {
+           
+                foreach (var item in Car.GetAllCars())
+                {
                 Cars.Add(item);
-            }
+                }
         }
 
         private void BtnFill_Click(object sender, RoutedEventArgs e)
