@@ -1,0 +1,45 @@
+﻿<Window x:Class="LB7_Alkhimovich.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LB7_Alkhimovich"
+        mc:Ignorable="d"
+        Title="Автосалон" Height="450" Width="800" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Button.Margin" Value="3,10"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button x:Name="btnFill" Click="BtnFill_Click">
+                Заполнить список
+            </Button>
+            <Button x:Name="btnAdd" Click="BtnAdd_Click">
+                Добавить
+            </Button>
+            <Button x:Name="btnEdit" Click="BtnEdit_Click">
+                Изменить
+            </Button>
+            <Button x:Name="btnRemove" Click="BtnRemove_Click">
+                Удалить
+            </Button>
+        </StackPanel>
+        <DataGrid x:Name="lBox" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}"         
+                  LoadingRow="DGrid_LoadingRow" 
+                  RowHeaderWidth="30">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Марка" Binding="{Binding Marka}" Width="*"  />
+                <DataGridTextColumn Header="Модель" Binding="{Binding Model}" Width="*" />
+                <DataGridTextColumn Header="Год" Binding="{Binding Year}" Width="*" />
+                <DataGridTextColumn Header="Цвет" Binding="{Binding Color}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
