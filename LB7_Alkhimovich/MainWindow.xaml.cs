@@ -1,14 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace LB7_Alkhimovich
 {
-   
     public partial class MainWindow : Window
     {
         ObservableCollection<Car> Cars;
@@ -20,41 +16,39 @@ namespace LB7_Alkhimovich
             lBox.DataContext = Cars;
         }
 
-       
-
         void FillData()
         {
             Cars.Clear();
-           
-                foreach (var item in Car.GetAllCars())
-                {
+            foreach (var item in Car.GetAllCars())
+            {
                 Cars.Add(item);
-                }
+            }
         }
 
         private void BtnFill_Click(object sender, RoutedEventArgs e)
         {
-            FillData();
+            FillData(); // Обновляем отображение данных
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var correctWindow = new Correct();
-            correctWindow.Title = "Добавить новый автомобиль";
-            correctWindow.EditButton.Visibility = Visibility.Collapsed;
-            if (correctWindow.ShowDialog() == true) // Открыть окно и дождаться его закрытия
-            {
-                var car = new Car()
-                {
-                    Marka = correctWindow.CarMarka,
-                    Model = correctWindow.CarModel,
-                    Year = correctWindow.CarYear,
-                    Color = correctWindow.CarColor
-                };
+              var correctWindow = new Correct();
+              correctWindow.Title = "Добавить новый автомобиль";
+              correctWindow.EditButton.Visibility = Visibility.Collapsed;
 
-                car.Insert();
-                FillData();
-            }
+              if (correctWindow.ShowDialog() == true) // Открыть окно и дождаться его закрытия
+              {
+                  var car = new Car()
+                  {
+                      Marka = correctWindow.CarMarka,
+                      Model = correctWindow.CarModel,
+                      Year = correctWindow.CarYear,
+                      Color = correctWindow.CarColor
+                  };
+
+                  car.Insert(); // Используем метод Insert из класса Car
+                  FillData();
+              }
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
@@ -77,13 +71,9 @@ namespace LB7_Alkhimovich
                     car.Year = correctWindow.CarYear;
                     car.Color = correctWindow.CarColor;
 
-                    car.Update();
+                    car.Update(); // Используем метод Update из класса Car
                     FillData();
                 }
-            }
-            else
-            {
-                //MessageBox.Show("Пожалуйста, выберите автомобиль для редактирования.");
             }
         }
 
@@ -93,10 +83,11 @@ namespace LB7_Alkhimovich
             var car = (Car)lBox.SelectedItem;
             if (car != null && result == MessageBoxResult.Yes)
             {
-                Car.Delete(car.CarId);
+                Car.Delete(car.CarId); // Используем метод Delete из класса Car
                 FillData();
             }
         }
+
         private void DGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = e.Row.GetIndex() + 1;
