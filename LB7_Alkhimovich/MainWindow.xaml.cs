@@ -79,11 +79,16 @@ namespace LB7_Alkhimovich
 
         private void BtnRemove_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Вы уверены?", "Удалить запись", MessageBoxButton.YesNo);
             var car = (Car)lBox.SelectedItem;
-            if (car != null && result == MessageBoxResult.Yes)
+            if (car == null)
             {
-                Car.Delete(car.CarId); // Используем метод Delete из класса Car
+                MessageBox.Show("Пожалуйста, выберите автомобиль для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; 
+            }
+            var result = MessageBox.Show("Вы уверены?", "Удалить запись", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                Car.Delete(car.CarId); 
                 FillData();
             }
         }

@@ -60,7 +60,8 @@ namespace LB7_Alkhimovich
         {
             using (var context = new CarContext())
             {
-               var car = context.Cars.Find(id); // Находим автомобиль по ID if (car != null)
+               var car = context.Cars.Find(id); // Находим автомобиль по ID
+                 if (car != null)
                  {
                     context.Cars.Remove(car); // Удаляем автомобиль
                     context.SaveChanges(); // Сохраняем изменения 
